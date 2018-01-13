@@ -10,11 +10,18 @@ def converter(object_):
 
 def stream_blockchain():
 	blockchain = Blockchain()
-	stream = blockchain.stream(filter_by=['comment'])
-
-	for post in stream:
-		print(json.dumps(post, default=converter, indent=4, sort_keys=True))
-		break
+	stream = map(Post, blockchain.stream(filter_by=['comment']))
+	while True:
+		try:
+			for post in stream:
+				tags = post["tags"]
+				if post.is_main_post() and "utopian-io" in tags:
+					author = post["author"]
+					title = post["title"]
+					print("{} posted {}".format(author, title))
+		except Exception as error:
+			print(repr(error))
+			continue
 
 if __name__ == '__main__':
 	stream_blockchain()
