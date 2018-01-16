@@ -1,0 +1,5 @@
+Title 'Test' Buy Upvote
+blog test steemdev
+<center>
+Test buying upvote from minnowbooster
+</center>
