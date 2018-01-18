@@ -53,23 +53,26 @@ def run():
 
     while True:
         current_hour = int(time.strftime("%-H"))
-        
+
         if current_hour is not hour:
             schedule = json.load(open('schedule.json'))
             posted = []
 
             for posting_time in schedule:
                 if int(posting_time) == current_hour:
-                    title = schedule[posting_time]['title']
-                    tags = schedule[posting_time]['tags']
-                    filename = schedule[posting_time]['filename']
-                    upvote_weight = schedule[posting_time]['upvote_weight']
-                    body = open(filename,"r")
-                    body = body.read()
+                    try:
+                        title = schedule[posting_time]['title']
+                        tags = schedule[posting_time]['tags']
+                        filename = schedule[posting_time]['filename']
+                        upvote_weight = schedule[posting_time]['upvote_weight']
+                        body = open(filename,"r")
+                        body = body.read()
 
-                    permlink = submit_post(title, tags, body, author, upvote_weight)
-                    posted.append(posting_time)
-
+                        permlink = submit_post(title, tags, body, author, upvote_weight)
+                        posted.append(posting_time)
+                    except Exception as error:
+                        print(repr(error))
+                        
             for posting_time in posted:
                 del schedule[posting_time]
                 print ("Removed entry from schedule")
