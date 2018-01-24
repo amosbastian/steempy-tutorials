@@ -1,0 +1,14 @@
+{
+  "steempytutorials": {
+    "upvote_weight": 100,
+    "upvote_limit": 1
+  },
+  "juliank": {
+    "upvote_weight": 100,
+    "upvote_limit": 1
+  },
+  "amosbastian": {
+    "upvote_weight": 100,
+    "upvote_limit": 1
+  }
+}
