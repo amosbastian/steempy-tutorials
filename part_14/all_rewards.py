@@ -35,11 +35,12 @@ def curation_reward(post, vote):
 
     return (rshares * curation_penalty(post, vote) * curation_pct) * base_share
 
+### Calculating beneficiary shares
 def beneficiaries_pct(post):
     weight = sum([beneficiary["weight"] for beneficiary in post["beneficiaries"]])
     return  weight / 10000.0
 
-### Adding everything together
+### Calculating author and beneficiary rewards
 def estimate_rewards(post):
     votes = [vote for vote in post["active_votes"]]
     total_share = sum([float(vote["rshares"]) * reward_share * base for vote in votes])
