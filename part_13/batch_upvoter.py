@@ -4,16 +4,16 @@ from steem.post import Post
 from steem.account import Account
 import json, os, time
 
-def start_upvote_cycle(upvote_queue, account):
+def start_upvote_cycle(upvote_queue, account, steem):
     for identifier in upvote_queue:
-        try:
-            upvote_weight = upvote_queue[identifier]
-            print ("Upvoting {} for {} %".format(identifier, upvote_weight))
-            steem.vote(identifier, upvote_weight, account)
-            print ("Succes, sleeping for 3 seconds")
-            time.sleep(3)
-        except Exception as e:
-            print (repr(e))
+        upvote_weight = upvote_queue[identifier]
+            try:
+                print ("Upvoting {} for {} %".format(identifier, upvote_weight))
+                steem.vote(identifier, upvote_weight, account)
+                print ("Succes, sleeping for 3 seconds")
+                time.sleep(3)
+            except Exception as e:
+                print (repr(e))
 
     # clear queue
     upvote_queue = {}
@@ -68,9 +68,9 @@ def run():
                     #print (repr(e))
                     break
 
-                # start upvoting cycle at 100% votint power
+                # start upvoting cycle at 100% voting power
                 if account.voting_power() == 100:
-                    start_upvote_cycle(upvote_queue, account)
+                    start_upvote_cycle(upvote_queue, account, steem)
 
                 # check for new date
                 if int(time.strftime("%d")) is not date:
