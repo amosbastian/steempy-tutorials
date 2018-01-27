@@ -3,9 +3,9 @@ import sys
 
 account = sys.argv[1]
 
-for author in Account(account).get_following():
-    print ('\n' + author)
-    if account in Account(author).get_following():
+for following in Account(account).get_following():
+    print ('\n' + following)
+    if account in Account(following).get_following():
         print  ('Follow back: Yes')
     else:
         print  ('Follow back: No')
