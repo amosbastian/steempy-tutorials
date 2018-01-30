@@ -30,7 +30,7 @@ def run():
 			stats[operation] += 1
 		operations += 1
 
-	print (operations)
+	print ("operations {}\n".format(operations))
 	for operation in stats:
 		print (operation, stats[operation])
 
