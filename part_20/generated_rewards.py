@@ -6,7 +6,7 @@ from dateutil.parser import parse
 from datetime import datetime, timedelta
 
 steem = Steem()
-account = "juliank"
+account = "steempytutorials"
 
 # Get days since account creation
 created = parse(Account(account)["created"]).date()
@@ -21,7 +21,6 @@ for day in range(days.days + 1):
 # Iterate over all blog posts
 post_limit = 0
 while post_limit < Account(account)["post_count"]:
-    print(post_limit, post_limit + 500)
     for post in steem.get_blog(account, post_limit, 500):
         post = Post(post["comment"])
         if post.is_main_post() and post["author"] == account:
@@ -30,7 +29,6 @@ while post_limit < Account(account)["post_count"]:
             if payout == 0:
                 payout = (Amount(post["total_payout_value"]).amount + 
                     Amount(post["curator_payout_value"]).amount)
-            print(post_date, payout)
             dates[post_date] += payout
     post_limit += 500
 
@@ -46,14 +44,12 @@ def first_reward():
 # Plotting the graph
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-plt.xticks([x[0], x[first_reward() - 1], x[-1]], visible=True, rotation="horizontal")
-
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
 plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-
+plt.xticks([x[0], x[first_reward() - 1], x[-1]], visible=True,
+    rotation="horizontal")
+plt.plot(x, y)
 plt.xlabel("{} to {} for @{}".format(created, today, account))
 plt.ylabel("Sum of post rewards generated")
-
 plt.grid()
-plt.plot(x, y)
 plt.show()
