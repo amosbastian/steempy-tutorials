@@ -4,7 +4,7 @@ import MySQLdb
 def insert_selection(block, index, timestamp, to, user, amount, memo):
 
     query = "INSERT INTO `transfers` (`block`, `index`, `timestamp`,`to`, `from`, `amount`, `memo`)" \
-            " VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(block, index, timestamp, to, user, amount, memo)
+            " VALUES ('{}', '{}', '{}', '{}', '{}', '{}', \"{}\");".format(block, index, timestamp, to, user, amount, memo)
 
     try:
         db = MySQLdb.connect(host="localhost",
