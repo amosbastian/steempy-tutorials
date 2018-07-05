@@ -29,15 +29,23 @@ class Steem_node():
     def run(self):
         run = 1
 
+        # run until end_block
         while run == 1:
             try:
+                # stream full blocks starting at start_block
                 stream = self.b.stream_from(start_block=self.block,
                                             end_block=self.end_block,
                                             full_blocks=True)
+
+                # process each block indiviudally
                 for block in stream:
                     print('\nBlock: ', self.block)
+
+                    # keep track of transaction index inside block
                     index = 0
 
+                    # go over each transaction indivually, process if tag is
+                    # met and update index
                     for transaction in block['transactions']:
                         if transaction['operations'][0][0] == self.tag:
                             self.process_transaction(index,
@@ -46,6 +54,8 @@ class Steem_node():
                                                      [0][1])
                         index += 1
 
+                    # Check if current block equals the end_block, break if so
+                    # else update the current block
                     if self.block == self.end_block:
                         run = 0
                     else:
