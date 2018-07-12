@@ -78,23 +78,31 @@ class myThread (threading.Thread):
     def run(self):
         run = 0
 
+
+        # Keep retrying in case of node error
         while run == 0:
+            # stream full blocks from start_block till end_block
             stream = self.blockchain.stream_from(start_block=self.start_block,
                                                  end_block=self.end_block,
                                                  full_blocks=True)
             try:
+                # process each block
                 for block in stream:
                     self.process_block(block)
+
+                    # Caculate and print current progess
                     percentage = ((self.start_block-self.current_block) /
                                   self.n*100)
                     print(f"Thread {self.thread_id}: block {self.start_block}/"
                           f"{self.end_block} {percentage:.2f}%")
+
                     self.start_block += 1
 
                     run = 1
             except Exception as e:
                 print('Error:', e)
 
+        # Dump remaining data to database
         self.dump_data()
 
 

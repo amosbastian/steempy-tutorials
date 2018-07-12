@@ -40,6 +40,7 @@ class Database():
             return True
 
     def get_data(self, date, table):
+        # Convert string to datetime_object and calculate end_date
         start_date = datetime.strptime(date, '%Y-%m-%d').date()
         end_date = start_date + timedelta(days=1)
 
