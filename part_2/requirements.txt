@@ -27,6 +27,6 @@ toml==0.9.3
 toolz==0.8.2
 tzlocal==1.4
 ujson==1.35
-urllib3==1.22
+urllib3==1.26.5
 voluptuous==0.10.5
 w3lib==1.18.0
